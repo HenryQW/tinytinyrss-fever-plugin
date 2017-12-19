@@ -876,6 +876,7 @@ class FeverAPI extends Handler {
 		// Check for all client in Android except ReadKit in Mac, Mr. Reader and Dalvik
 		if (strpos($_SERVER['HTTP_USER_AGENT'],"Dalvik") !== false ||
 			strpos($_SERVER['HTTP_USER_AGENT'],"ReadKit") !== false ||
+			strpos($_SERVER['HTTP_USER_AGENT'],"Reeder") !== false ||
 			strpos($_SERVER['HTTP_USER_AGENT'],"Mr. Reader") !== false) {
 			$this->ID_HACK_FOR_MRREADER = 0;
 		} else {
