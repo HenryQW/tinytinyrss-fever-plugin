@@ -577,6 +577,9 @@ class FeverAPI extends Handler {
                                    WHERE " . $where);
         $sth->execute($where_items);
 
+        // set 'hasSandbox' to true enables iframe support
+        $_SESSION['hasSandbox'] = true;
+
         while ($line = $sth->fetch())
         {            
             $line_content = sanitize(
