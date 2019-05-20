@@ -577,6 +577,8 @@ class FeverAPI extends Handler {
                                    WHERE " . $where);
         $sth->execute($where_items);
 
+        $_SESSION['hasSandbox'] = true;
+
         while ($line = $sth->fetch())
         {            
             $line_content = sanitize(
