@@ -1,14 +1,17 @@
 <?php
-class Fever extends Plugin {
+class Fever extends Plugin
+{
     private $host;
 
-    function about() {
+    public function about()
+    {
         return array(2.3,
             "Emulates the Fever API for Tiny Tiny RSS",
-            "DigitalDJ, mestrode & murphy, eric-pierce");
+            "DigitalDJ, mestrode, murphy, eric-pierce, HenryQW");
     }
 
-    function init($host) {
+    public function init($host)
+    {
         $this->host = $host;
         
         $host->add_hook($host::HOOK_PREFS_TAB, $this);
@@ -16,10 +19,16 @@ class Fever extends Plugin {
     
     /* plugins/main/init.php hook_prefs_tab */
 
-    function hook_prefs_tab($args) {
-        if ($args != "prefPrefs") return;
+    public function hook_prefs_tab($args)
+    {
+        if ($args != "prefPrefs") {
+            return;
+        }
 
-        print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"" . __("Fever Emulation") . "\">";
+
+        print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>extension</i> ".__('Fever Emulation')."\">";
+
 
         print "<h3>" . __("Fever Emulation") . "</h3>";
 
@@ -37,7 +46,7 @@ class Fever extends Plugin {
                 new Ajax.Request('backend.php', {
                     parameters: dojo.objectToQuery(this.getValues()),
                     onComplete: function(transport) {
-                        notify_info(transport.responseText);
+                        Notify.msg(transport.responseText);
                     }
                 });
                 //this.reset();
@@ -49,7 +58,7 @@ class Fever extends Plugin {
         print_hidden("plugin", "fever");
 
         print "<input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\" type=\"password\" name=\"password\" />";
-        print "<button dojoType=\"dijit.form.Button\" type=\"submit\">" . __("Set Password") . "</button>";
+        print_button("submit", __("Set Password"), "class='alt-primary'");
         print "</form>";
 
         print "<p>" . __("To login with the Fever API, set your server details in your favourite RSS application to: ") . get_self_url_prefix() . "/plugins/fever/" . "</p>";
@@ -60,14 +69,12 @@ class Fever extends Plugin {
         print "</div>";
     }
 
-    function save()
+    public function save()
     {
-        if (isset($_POST["password"]) && isset($_SESSION["uid"]))
-        {
+        if (isset($_POST["password"]) && isset($_SESSION["uid"])) {
             $sth = $this->pdo->prepare("SELECT login FROM ttrss_users WHERE id = ?");
             $sth->execute([clean($_SESSION["uid"])]);
-            if ($line = $sth->fetch())
-            {
+            if ($line = $sth->fetch()) {
                 $password = md5($line["login"] . ":" . $_POST["password"]);
                 $this->host->set($this, "password", $password);
                 echo __("Password saved.");
@@ -75,9 +82,8 @@ class Fever extends Plugin {
         }
     }
     
-    function api_version() {
+    public function api_version()
+    {
         return 2;
     }
 }
-
-?>
