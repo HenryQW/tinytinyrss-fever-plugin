@@ -1,5 +1,7 @@
 # Tiny Tiny RSS Fever API Plugin
 
+Archived in favor of [DigitalDJ's fork](https://github.com/DigitalDJ/tinytinyrss-fever-plugin).
+
 ## Description
 
 This is an open source plugin for Tiny Tiny RSS which simulates the Fever API. This allows Fever compatible RSS clients to use Tiny Tiny RSS.
