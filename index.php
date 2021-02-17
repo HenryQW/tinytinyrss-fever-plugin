@@ -33,7 +33,8 @@
     define('NO_SESSION_AUTOSTART', true);
 
     require_once "autoload.php";
-    require_once "db.php";
+    require_once "classes/db.php";
+    require_once "classes/api.php";
     require_once "db-prefs.php";
     require_once "functions.php";
     require_once "sessions.php";
@@ -52,7 +53,7 @@
         ob_start();
     }
         
-    if ($_REQUEST["sid"]) {
+    if (isset($_REQUEST["sid"])) {
         session_id($_REQUEST["sid"]);
         @session_start();
     } else if (defined('_API_DEBUG_HTTP_ENABLED')) {
